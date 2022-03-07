@@ -1,0 +1,36 @@
+{% extends "layouts/base.html" %}
+{% block page %}Home{% endblock %}
+
+{% block content %}
+	<div class="jumbotron text-center mb-5">
+	  <h1 class="display-4">Qur'an Online</h1>
+	  <p class="lead">Membaca Al-Qur'an kini lebih mudah, dan bisa di akses dimana saja, dan kapan saja</p>
+	</div>
+
+  <div class="row text-center">
+  	<a href="/juz" class="col-md-4 mb-4 none-text-decoration text-dark">
+  		<div class="card" style="padding: 0.5rem;">
+  		  <div class="card-body">
+  		    <h5 class="card-title">~Juz~</h5>
+          <p class="card-text">Membaca Al-Qur'an berdasarkan juz</p>
+  		  </div>
+  		</div>
+  	</a>
+    <a href="/surah" class="col-md-4 mb-4 none-text-decoration text-dark">
+      <div class="card" style="padding: 0.5rem;">
+        <div class="card-body">
+          <h5 class="card-title">~Surah~</h5>
+          <p class="card-text">Membaca Al-Qur'an berdasarkan Surah</p>
+        </div>
+      </div>
+    </a>
+    <a href="/cari" class="col-md-4 mb-4 none-text-decoration text-dark">
+      <div class="card" style="padding: 0.5rem;">
+        <div class="card-body">
+          <h5 class="card-title">~Cari~</h5>
+          <p class="card-text">Cari surah menggunakan arti dari potongan ayat</p>
+        </div>
+      </div>
+    </a>
+  </div>
+{% endblock %}
