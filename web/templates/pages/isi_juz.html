@@ -1,0 +1,24 @@
+{% extends "layouts/base.html" %}
+{% block page %}{{ page }}{% endblock %}
+{% block customhead %}
+  <script type="text/javascript">
+    // async function get_data() {
+    //   $.get("http://api.alquran.cloud/v1/juz/{{ juz }}", function (data, satus) {
+
+    //   }).then(res => {
+    //     console.log(res);
+    //   }).catch(error => {
+    //     console.log(error);
+    //   });
+    // }
+
+    // get_data();
+    window.addEventListener('load', function () {
+      alert("It's loaded!")
+    })
+  </script>
+{% endblock %}
+
+{% block content %}
+  
+{% endblock %}
