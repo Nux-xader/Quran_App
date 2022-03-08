@@ -1,9 +1,13 @@
 {% extends "layouts/base.html" %}
 {% block page %}Home{% endblock %}
+{% block customhead %}
+  <script src="{{ url_for('static', filename='js/effect.js') }}"></script>
+{% endblock %}
+
 
 {% block content %}
 	<div class="jumbotron text-center mb-5">
-	  <h1 class="display-4">Qur'an Online</h1>
+	  <h1 class="display-4" id="jumbotron"></h1>
 	  <p class="lead">Membaca Al-Qur'an kini lebih mudah, dan bisa di akses dimana saja, dan kapan saja</p>
 	</div>
 
@@ -33,4 +37,10 @@
       </div>
     </a>
   </div>
+{% endblock %}
+
+{% block customfooter %}
+  <script type="text/javascript">
+    typeSentence("Qur'an Online", "#jumbotron")
+  </script>
 {% endblock %}
