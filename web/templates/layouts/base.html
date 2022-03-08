@@ -21,13 +21,13 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/juz">Juz</a>
+              <a class="nav-link {% if page == 'Juz' %}active{% endif %}" aria-current="page" href="/juz">Juz</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/surah">Surah</a>
+              <a class="nav-link {% if page == 'Surah' %}active{% endif %}" href="/surah">Surah</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle {% if page == 'Cari' %}active{% endif %}" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Cari
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% block page %}Home{% endblock %}
+{% block page %}{{ page }}{% endblock %}
 {% block customhead %}
   <script src="{{ url_for('static', filename='js/effect.js') }}"></script>
 {% endblock %}

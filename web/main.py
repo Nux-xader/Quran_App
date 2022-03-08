@@ -7,7 +7,12 @@ DEVELOPENT = True
 
 @app.route("/")
 def home():
-	return render_template("pages/index.html", app_name=APP_NAME)
+	return render_template("pages/index.html", app_name=APP_NAME, page="Home")
+
+
+@app.route("/juz")
+def juz():
+	return render_template("pages/juz.html", app_name=APP_NAME, page="Juz")
 
 
 
