@@ -1,24 +1,40 @@
 {% extends "layouts/base.html" %}
 {% block page %}{{ page }}{% endblock %}
-{% block customhead %}
-  <script type="text/javascript">
-    // async function get_data() {
-    //   $.get("http://api.alquran.cloud/v1/juz/{{ juz }}", function (data, satus) {
-
-    //   }).then(res => {
-    //     console.log(res);
-    //   }).catch(error => {
-    //     console.log(error);
-    //   });
-    // }
-
-    // get_data();
-    window.addEventListener('load', function () {
-      alert("It's loaded!")
-    })
-  </script>
-{% endblock %}
 
 {% block content %}
-  
+  <div class="ayat" id="ayat">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </div>
+{% endblock %}
+
+{% block customfooter %}
+  <script type="text/javascript">
+    var global_var = {};
+
+    async function render(data, index, max=10) {
+      $(".content").children("div").remove();
+    }
+
+    async function get_data() {
+      let resp = await fetch("http://api.alquran.cloud/v1/juz/{{ juz }}", {
+          "method": "GET",
+          "mode": "cors"
+      });
+
+      await resp.json().then( res => {
+         global_var.ayat = res.data.ayahs;
+      }).catch(err => {
+        alert("Gagal terhubung ke server, silahkan periksa koneksi internet anda");
+      });
+
+      render(global_var.ayat, 0)
+    }
+
+    get_data();
+  </script>
 {% endblock %}
