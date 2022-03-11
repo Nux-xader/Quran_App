@@ -17,7 +17,15 @@
     var global_var = {};
 
     async function render(data, index, max=10) {
+      var result_ayat = "";
       $(".content").children("div").remove();
+      for (var i=0; i < data.length; i++) {
+        result_ayat = result_ayat+`<div class="ayat mb-3" id="ayat">\n${data[i].text}\n</div>`;
+      }
+
+      $(".content").text(result_ayat);
+
+      console.log(result_ayat);
     }
 
     async function get_data() {
