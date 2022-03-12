@@ -36,6 +36,24 @@ def juz():
 		)
 
 
+@app.route("/surah")
+def surah():
+	if "surah" in request.args:
+		surah = request.args.get('surah')
+		return render_template(
+			"pages/isi_surah.html", 
+			app_name=APP_NAME, 
+			page=f"Surah {surah}", 
+			surah=surah
+		)
+
+	else:
+		return render_template(
+			"pages/surah.html", 
+			app_name=APP_NAME, 
+			page="Surah"
+		)
+
 
 if __name__ == '__main__':
 	if DEVELOPENT:
