@@ -15,12 +15,24 @@
       float: left;
     }
 
-    .row {
+    .card-body .row {
       transition: 0.4s;
     }
 
-    .row:hover {
+    .card-body .row:hover {
       font-size: 25px;
+    }
+
+    .btn-next {
+      float: right;
+    }
+
+    .pagination-border-color {
+      border-color: #0d6efd;
+    }
+
+    .pagination {
+      float: right;
     }
 
     @media only screen and (max-width: 768px) {
@@ -40,10 +52,29 @@
       Juz {{ juz }}
     </div>
     <div class="card-body">
-      <p class="card-text ml-auto"></p>
+      <div class="card-text ml-auto"></div>
     </div>
     <div class="card-footer text-muted">
-      2 days ago
+
+      <nav aria-label="pagination-juz" class="mt-3">
+        <ul class="pagination">
+          <li class="page-item">
+            <button class="page-link bg-primary text-dark pagination-border-color prev-btn mr-3" onclick="prev_subpage()" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </button>
+          </li>
+          <li class="page-item disabled"><button class="page-link text-dark current-subpage">...</button></li>
+<!--           <li class="page-item"><button class="page-link pagination-border-color bg-primary text-dark" onclick="render()">1</button></li>
+          <li class="page-item"><button class="page-link pagination-border-color bg-primary text-dark" onclick="render()">2</button></li>
+          <li class="page-item"><button class="page-link pagination-border-color bg-primary text-dark" onclick="render()">3</button></li> -->
+          <li class="page-item">
+            <button class="page-link pagination-border-color bg-primary text-dark next-btn ml-3" onclick="next_subpage()" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
     </div>
   </div>
 {% endblock %}
@@ -57,9 +88,13 @@
   <script type="text/javascript">
     var global_var = {};
 
-    async function render(data, index, max=10) {
+    async function render(sub_page) {
+      let data = global_var.ayat[sub_page];
+      global_var.current_subpage = sub_page;
+
       var result_ayat = "";
-      $(".card-body").children("p").remove();
+      $(".card-body").children("div").remove();
+      $(".card-body").children("hr").remove();
       for (var i=0; i < data.length; i++) {
         result_ayat = result_ayat+`
         <div class="row">
@@ -83,6 +118,7 @@
       }
 
       $(".card-body").append(result_ayat);
+      $(".current-subpage").html(global_var.current_subpage+1);
     }
 
     async function get_data() {
@@ -92,18 +128,30 @@
       });
 
       await resp.json().then( res => {
-         global_var.ayat = res.data.ayahs;
+        global_var.ayat = array_divider(7, res.data.ayahs);
       }).catch(err => {
         alert("Gagal terhubung ke server, silahkan periksa koneksi internet anda");
       });
 
-      render(global_var.ayat, 0)
+      render(0);
     }
 
+    function prev_subpage() {
+      if (global_var.current_subpage > 0) {
+        render(global_var.current_subpage-1);
+      }
+    }
+
+
+    function next_subpage() {
+      if (global_var.current_subpage < global_var.ayat.length-1) {
+        render(global_var.current_subpage+1);
+      }
+    }
+
+
     get_data();
-
     typeSentence("Loading...", ".card-text", 35);
-
 
   </script>
 {% endblock %}
