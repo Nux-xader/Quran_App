@@ -1,31 +1,88 @@
 {% extends "layouts/base.html" %}
 {% block page %}{{ page }}{% endblock %}
 
+{% block customhead %}
+  <style type="text/css">
+    .ayat {
+      text-align: right;
+    }
+
+    .ayat .number {
+      margin-right: 1rem;
+    }
+
+    .ayat .surah {
+      float: left;
+    }
+
+    .row {
+      transition: 0.4s;
+    }
+
+    .row:hover {
+      font-size: 25px;
+    }
+
+    @media only screen and (max-width: 768px) {
+      /* For mobile phones: */
+      .card {
+        min-width: 98%;
+        margin-left: 1%;
+      }
+    }
+  </style>
+{% endblock %}
+
+
 {% block content %}
-  <div class="ayat" id="ayat">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  <div class="card bg-dark text-white">
+    <div class="card-header text-center">
+      Juz {{ juz }}
+    </div>
+    <div class="card-body">
+      <p class="card-text ml-auto"></p>
+    </div>
+    <div class="card-footer text-muted">
+      2 days ago
+    </div>
   </div>
 {% endblock %}
 
+
+
 {% block customfooter %}
+  <script src="{{ url_for('static', filename='js/helper.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/effect.js') }}"></script>
+
   <script type="text/javascript">
     var global_var = {};
 
     async function render(data, index, max=10) {
       var result_ayat = "";
-      $(".content").children("div").remove();
+      $(".card-body").children("p").remove();
       for (var i=0; i < data.length; i++) {
-        result_ayat = result_ayat+`<div class="ayat mb-3" id="ayat">\n${data[i].text}\n</div>`;
+        result_ayat = result_ayat+`
+        <div class="row">
+          <div class="col-md-2">
+            <p>
+              <span class="surah">${data[i].surah.englishName}</span>
+            </p>
+          </div>
+
+          <div class="col-md-10">
+            <p class="card-text ayat mb-3" id="ayat">
+              ${data[i].text}
+              <span class="number">( ${GetArabicNumber(data[i].numberInSurah.toString())} )</span>
+            </p>
+          </div>
+        </div>`;
+
+        if (i < data.length-1) {
+          result_ayat = result_ayat+`<hr>`;
+        }
       }
 
-      $(".content").text(result_ayat);
-
-      console.log(result_ayat);
+      $(".card-body").append(result_ayat);
     }
 
     async function get_data() {
@@ -44,5 +101,9 @@
     }
 
     get_data();
+
+    typeSentence("Loading...", ".card-text", 35);
+
+
   </script>
 {% endblock %}
