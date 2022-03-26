@@ -54,6 +54,14 @@ def surah():
 			page="Surah"
 		)
 
+@app.route("/cari")
+def cari():
+	return render_template(
+		"pages/cari.html", 
+		app_name=APP_NAME, 
+		page="Cari"
+	)
+
 
 if __name__ == '__main__':
 	if DEVELOPENT:

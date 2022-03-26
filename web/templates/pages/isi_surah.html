@@ -3,11 +3,6 @@
 
 {% block customhead %}
   <style type="text/css">
-    a {
-      text-decoration: none;
-      color: white;
-    }
-
     .ayat {
       text-align: right;
     }
@@ -54,13 +49,13 @@
 {% block content %}
   <div class="card bg-dark text-white">
     <div class="card-header text-center">
-      Surah
+
     </div>
     <div class="card-body">
       <div class="card-text ml-auto"></div>
     </div>
-    
-    <div class="card-footer">
+    <div class="card-footer text-muted">
+
       <nav aria-label="pagination-juz" class="mt-3">
         <ul class="pagination">
           <li class="page-item">
@@ -79,8 +74,8 @@
           </li>
         </ul>
       </nav>
-    </div>
 
+    </div>
   </div>
 {% endblock %}
 
@@ -94,51 +89,42 @@
     var global_var = {};
 
     async function render(sub_page) {
-      let data = global_var.surahs[sub_page];
+      let data = global_var.ayat[sub_page];
       global_var.current_subpage = sub_page;
 
-      var result_surahs = "";
-      $(".card-body").children("a").remove();
+      var result_ayat = "";
+      $(".card-body").children("div").remove();
       $(".card-body").children("hr").remove();
       for (var i=0; i < data.length; i++) {
-        result_surahs = result_surahs+`
-        <a href="/surah?surah=${data[i].number}">
-          <div class="row">
-            <div class="col-md-2">
-              <p>
-                <span class="ayat">${data[i].number}</span>
-              </p>
-            </div>
+        result_ayat = result_ayat+`
+        <div class="row">
 
-            <div class="col-md-10">
-              <p class="card-text surah mb-3" id="surah">
-                ${data[i].name}
-              </p>
-            </div>
+          <div class="col-md-12">
+            <p class="card-text ayat mb-3" id="ayat">
+              ${data[i].text}
+              <span class="number">( ${GetArabicNumber(data[i].numberInSurah.toString())} )</span>
+            </p>
           </div>
-        </a>
-        `;
+        </div>`;
 
         if (i < data.length-1) {
-          result_surahs = result_surahs+`<hr>`;
+          result_ayat = result_ayat+`<hr>`;
         }
       }
-
-      $(".card-body").append(result_surahs);
+      $(".card-body").append(result_ayat);
       $(".current-subpage").html(global_var.current_subpage+1);
-      $(".card-header").html(`Surah ${data[0].number}-${data[data.length-1].number}`);
     }
 
     async function get_data() {
       await typeSentence("Loading...", ".card-text", 35);
-      let resp = await fetch("http://api.alquran.cloud/v1/meta", {
+      let resp = await fetch("http://api.alquran.cloud/v1/surah/{{ surah }}", {
           "method": "GET",
           "mode": "cors"
       });
 
       await resp.json().then( res => {
-        $(".card-body").children("div").remove();
-        global_var.surahs = array_divider(10, res.data.surahs.references);
+        $(".card-header").html(res.data.name);
+        global_var.ayat = array_divider(7, res.data.ayahs);
       }).catch(err => {
         alert("Gagal terhubung ke server, silahkan periksa koneksi internet anda");
       });
@@ -154,7 +140,7 @@
 
 
     function next_subpage() {
-      if (global_var.current_subpage < global_var.surahs.length-1) {
+      if (global_var.current_subpage < global_var.ayat.length-1) {
         render(global_var.current_subpage+1);
       }
     }

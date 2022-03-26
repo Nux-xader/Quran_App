@@ -122,6 +122,7 @@
     }
 
     async function get_data() {
+      await typeSentence("Loading...", ".card-text", 35);
       let resp = await fetch("http://api.alquran.cloud/v1/juz/{{ juz }}", {
           "method": "GET",
           "mode": "cors"
@@ -151,7 +152,6 @@
 
 
     get_data();
-    typeSentence("Loading...", ".card-text", 35);
 
   </script>
 {% endblock %}
