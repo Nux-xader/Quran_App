@@ -1,5 +1,57 @@
 {% extends "layouts/base.html" %}
 {% block page %}{{ page }}{% endblock %}
 
+{% block customhead %}
+  <style type="text/css">
+    #jumbotron {
+      margin-top: 17%;
+    }
+
+    #keyword {
+      width: 40%;
+      margin-left: 30%;
+      margin-top: 1rem;
+    }
+
+
+    @media only screen and (max-width: 768px) {
+      /* For mobile phones: */
+      #keyword {
+        width: 80%;
+        margin-left: 10%;
+      }
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
+  <div class="jumbotron text-center mb-5">
+    <!-- <h1 class="display-4" id="jumbotron"><strong>Pencarian</strong></h1> -->
+    <h1 class="display-4" id="jumbotron"><strong>Masih Dalam Tahap Pengembangan:)</strong></h1>
+  </div>
+
+<!--   <div class="text-center from-search">
+    <input type="search" class="form-control rounded-pill" id="keyword">
+    <button class="rounded-sm btn btn-primary mt-3" id="search" onclick="search();">Cari</button>
+  </div>
+  <div class="card-body"></div> -->
+{% endblock %}
+
+
+{% block customfooter %}
+  <script type="text/javascript">
+    function search () {
+      var keyword = document.getElementById("keyword").value;
+      if (keyword.length < 1) {
+        return;
+      }
+      $(".content").children("div").remove();
+    }
+
+    $(document).on('keypress',function(e) {
+      if(e.which == 13) {
+        search();
+      }
+    });
+  </script>
 {% endblock %}

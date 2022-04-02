@@ -59,7 +59,7 @@ def cari():
 	return render_template(
 		"pages/cari.html", 
 		app_name=APP_NAME, 
-		page="Cari"
+		page="Cari Potongan Ayat"
 	)
 
 
